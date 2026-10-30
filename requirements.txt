@@ -8,3 +8,4 @@ razorpay==1.4.2
 psycopg[binary]
 gunicorn
 setuptools==80.9.0
+resend
