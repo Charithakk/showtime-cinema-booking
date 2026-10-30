@@ -1,0 +1,245 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Showtime | Every Reel. Every Emotion.</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@700;800&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+</head>
+
+<body>
+
+<header class="topbar">
+    <a class="brand" href="#"><span class="brand-mark">S</span>SHOW<span>TIME</span></a>
+
+    <nav>
+        <a href="#movies">Movies</a>
+        <a href="#how">How it works</a>
+    </nav>
+
+    <div class="nav-actions">
+        <span id="welcome"></span>
+        <button class="btn btn-outline" id="authBtn">Sign in</button>
+    </div>
+</header>
+
+<main>
+
+<section class="hero">
+    <div class="hero-copy">
+        <p class="eyebrow">THE POWER STAR COLLECTION</p>
+        <h1>Every show.<br><em>A blockbuster.</em></h1>
+
+        <p class="hero-sub">
+            Every Reel. Every Emotion. Every Show.
+            Celebrate the Power Star collection, choose your seats
+            and make it a movie night.
+        </p>
+
+        <a class="btn btn-primary" href="#movies">Explore movies →</a>
+
+        <div class="hero-meta">
+            <span>✦ 23 MOVIES</span>
+            <span>✦ TELUGU CINEMA</span>
+            <span>✦ ₹150 / SEAT</span>
+        </div>
+    </div>
+
+    <div class="hero-art">
+        <div class="poster-glow"></div>
+        <div class="hero-poster">
+            <img src="https://image.tmdb.org/t/p/w500/placeholder.jpg"
+                 onerror="this.style.display='none'">
+            <div class="poster-fallback">
+                POWER<br>STAR<br>
+                <small>PAWAN KALYAN</small>
+            </div>
+        </div>
+        <div class="floating-note">YOUR NEXT<br><b>BLOCKBUSTER</b></div>
+    </div>
+</section>
+
+<section class="section" id="movies">
+
+    <div class="section-head">
+        <div>
+            <p class="eyebrow">HANDPICKED FOR YOU</p>
+            <h2>Featured <em>movies</em></h2>
+        </div>
+        <span class="count">01 — 05</span>
+    </div>
+
+    <div id="featured" class="movie-grid featured-grid"></div>
+
+    <div class="section-head all-head">
+        <div>
+            <p class="eyebrow">THE COLLECTION</p>
+            <h2>All <em>movies</em></h2>
+        </div>
+        <input id="search" class="search" placeholder="Search movies...">
+    </div>
+
+    <div id="allMovies" class="movie-grid"></div>
+
+</section>
+
+<section class="how" id="how">
+    <p class="eyebrow">SIMPLE. QUICK. YOURS.</p>
+    <h2>Movie night, <em>sorted.</em></h2>
+
+    <div class="steps">
+        <div>
+            <b>01</b>
+            <h3>Pick a movie</h3>
+            <p>Explore the Power Star collection.</p>
+        </div>
+
+        <div>
+            <b>02</b>
+            <h3>Choose your seats</h3>
+            <p>Pick your favourite seats.</p>
+        </div>
+
+        <div>
+            <b>03</b>
+            <h3>Book & enjoy</h3>
+            <p>Pay securely and get your confirmation.</p>
+        </div>
+    </div>
+</section>
+
+</main>
+
+<footer>
+    <a class="brand" href="#">SHOW<span>TIME</span></a>
+    <p>Made for the love of cinema. ✦</p>
+</footer>
+
+
+<!-- LOGIN AND SIGNUP MODAL -->
+
+<div class="modal hidden" id="authModal">
+    <div class="dialog">
+        <button class="close" data-close="authModal">×</button>
+
+        <p class="eyebrow">WELCOME TO SHOWTIME</p>
+        <h2 id="authTitle">Sign in</h2>
+
+        <form id="authForm">
+
+            <div id="nameWrap" class="hidden">
+                <label>Your name</label>
+                <input id="authName" autocomplete="name">
+            </div>
+
+            <label>Email</label>
+            <input id="authEmail" type="email" required autocomplete="email">
+
+            <label>Password</label>
+            <input id="authPassword" type="password"
+                   required minlength="8" autocomplete="current-password">
+
+            <button class="btn btn-primary full" id="authSubmit">
+                Sign in
+            </button>
+
+        </form>
+
+        <p class="switch-auth" id="switchAuth">
+            New here? <a href="#">Create an account</a>
+        </p>
+
+        <p id="authMessage" class="message"></p>
+    </div>
+</div>
+
+
+<!-- BOOKING HISTORY MODAL -->
+
+<div class="modal hidden" id="historyModal">
+    <div class="dialog" style="max-width:850px;width:95%;max-height:85vh;overflow-y:auto;">
+
+        <button class="close" data-close="historyModal">×</button>
+
+        <p class="eyebrow">YOUR MOVIE JOURNEY</p>
+        <h2>My <em>Bookings</em></h2>
+
+        <div id="bookingHistory">
+            Loading your bookings...
+        </div>
+
+        <button class="btn btn-outline" id="logoutBtn" style="margin-top:25px;">
+            Log out
+        </button>
+
+    </div>
+</div>
+
+
+<!-- SEAT BOOKING MODAL -->
+
+<div class="modal hidden" id="bookingModal">
+    <div class="dialog booking-dialog">
+
+        <button class="close" data-close="bookingModal">×</button>
+
+        <p class="eyebrow">RESERVE YOUR SEATS</p>
+        <h2 id="bookingTitle">Movie title</h2>
+
+        <div class="booking-controls">
+
+            <label>
+                Date
+                <input type="date" id="showDate">
+            </label>
+
+            <label>
+                Showtime
+                <select id="showTime">
+                    <option>10:30</option>
+                    <option>14:00</option>
+                    <option selected>18:30</option>
+                    <option>21:30</option>
+                </select>
+            </label>
+
+        </div>
+
+        <div class="screen">SCREEN THIS WAY</div>
+
+        <div id="seats" class="seats"></div>
+
+        <div class="seat-legend">
+            <span>● Available</span>
+            <span>● Selected</span>
+            <span>● Booked</span>
+        </div>
+
+        <div class="booking-bottom">
+            <span>
+                <b id="seatCount">0</b> seats ·
+                <b id="total">₹0</b>
+            </span>
+
+            <button class="btn btn-primary" id="payBtn">
+                Continue to payment
+            </button>
+        </div>
+
+        <p id="bookingMessage" class="message"></p>
+
+    </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script src="{{ url_for('static', filename='js/script.js') }}"></script>
+
+</body>
+</html>
